@@ -10,11 +10,19 @@ class Search {
     protected $base_url = "127.0.0.1:9200/thesis/_search";
     protected $index = 'article';
 
-    public function indexer($attributes, $new_record, $object_entity)
+    public function indexer($attributes, $type, $object_entity)
     {        
-        return $new_record ? 
-            $this->adaptor($attributes, 'insert',  $object_entity) : 
-            $this->adaptor($attributes, 'update',  $object_entity);
+        switch ($type) {
+            case '0':
+                return $this->adaptor($attributes, 'update',  $object_entity) ;
+                break;
+            case '1':
+                return $this->adaptor($attributes, 'insert',  $object_entity) ; 
+                break;
+            case '2':
+                return $this->adaptor($attributes, 'delete',  $object_entity) ; 
+                break;
+        }
     }
     
     public function adaptor($attributes, $type, $object_entity)
